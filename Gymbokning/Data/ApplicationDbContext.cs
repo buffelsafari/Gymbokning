@@ -10,7 +10,11 @@ namespace Gymbokning.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser,IdentityRole, string>
     {
-        readonly DbSet<GymClass> GymClasses;
+        public DbSet<Gymbokning.Models.GymClass> GymClasses { get; set; }
+        public DbSet<Gymbokning.Models.ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Gymbokning.Models.ApplicationUserGymClass> ApplicationUsersGymClasses { get; set; }
+
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -25,6 +29,6 @@ namespace Gymbokning.Data
 
         }
 
-        public DbSet<Gymbokning.Models.GymClass> GymClass { get; set; }
+        
     }
 }

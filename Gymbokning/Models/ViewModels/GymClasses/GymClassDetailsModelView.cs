@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Gymbokning.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Gymbokning.Models
+namespace Gymbokning.Models.ViewModels.GymClasses
 {
-    public class GymClass
+    public class GymClassDetailsModelView
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -13,7 +14,6 @@ namespace Gymbokning.Models
         public TimeSpan Duration { get; set; }
         public DateTime EndTime { get { return StartTime + Duration; } }
         public string Description { get; set; }
-        public ICollection<ApplicationUserGymClass> Users { get; set; }
-
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

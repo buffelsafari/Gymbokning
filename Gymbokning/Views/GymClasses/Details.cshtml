@@ -1,4 +1,4 @@
-﻿@model Gymbokning.Models.GymClass
+﻿@model Gymbokning.Models.ViewModels.GymClasses.GymClassDetailsModelView
 
 @{
     ViewData["Title"] = "Details";
@@ -40,3 +40,8 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@foreach (var item in @Model.Users)
+{ 
+    @item.Email<br>
+}

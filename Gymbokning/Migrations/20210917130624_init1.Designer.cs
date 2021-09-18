@@ -4,14 +4,16 @@ using Gymbokning.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Gymbokning.Data.Migrations
+namespace Gymbokning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210917130624_init1")]
+    partial class init1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,18 +88,13 @@ namespace Gymbokning.Data.Migrations
 
             modelBuilder.Entity("Gymbokning.Models.ApplicationUserGymClass", b =>
                 {
-                    b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("GymClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ApplicationUserId", "GymClassId");
-
-                    b.HasIndex("ApplicationUserId1");
 
                     b.HasIndex("GymClassId");
 
@@ -267,7 +264,9 @@ namespace Gymbokning.Data.Migrations
                 {
                     b.HasOne("Gymbokning.Models.ApplicationUser", null)
                         .WithMany("gymClasses")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Gymbokning.Models.GymClass", null)
                         .WithMany("Users")

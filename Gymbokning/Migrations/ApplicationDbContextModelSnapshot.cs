@@ -4,22 +4,35 @@ using Gymbokning.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Gymbokning.Data.Migrations
+namespace Gymbokning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210917085059_init")]
-    partial class init
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ApplicationUserGymClass", b =>
+                {
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("gymClassesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UsersId", "gymClassesId");
+
+                    b.HasIndex("gymClassesId");
+
+                    b.ToTable("ApplicationUserGymClass");
+                });
 
             modelBuilder.Entity("Gymbokning.Models.ApplicationUser", b =>
                 {
@@ -88,22 +101,15 @@ namespace Gymbokning.Data.Migrations
 
             modelBuilder.Entity("Gymbokning.Models.ApplicationUserGymClass", b =>
                 {
-                    b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("GymClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ApplicationUserId", "GymClassId");
 
-                    b.HasIndex("ApplicationUserId1");
-
-                    b.HasIndex("GymClassId");
-
-                    b.ToTable("ApplicationUserGymClass");
+                    b.ToTable("ApplicationUsersGymClasses");
                 });
 
             modelBuilder.Entity("Gymbokning.Models.GymClass", b =>
@@ -127,7 +133,7 @@ namespace Gymbokning.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GymClass");
+                    b.ToTable("GymClasses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -265,15 +271,17 @@ namespace Gymbokning.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Gymbokning.Models.ApplicationUserGymClass", b =>
+            modelBuilder.Entity("ApplicationUserGymClass", b =>
                 {
                     b.HasOne("Gymbokning.Models.ApplicationUser", null)
-                        .WithMany("gymClasses")
-                        .HasForeignKey("ApplicationUserId1");
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Gymbokning.Models.GymClass", null)
-                        .WithMany("Users")
-                        .HasForeignKey("GymClassId")
+                        .WithMany()
+                        .HasForeignKey("gymClassesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -327,16 +335,6 @@ namespace Gymbokning.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Gymbokning.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("gymClasses");
-                });
-
-            modelBuilder.Entity("Gymbokning.Models.GymClass", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

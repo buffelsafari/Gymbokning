@@ -8,6 +8,6 @@ namespace Gymbokning.Models
 {
     public class ApplicationUser:IdentityUser
     {
-        public ICollection<ApplicationUserGymClass> gymClasses { get;}
+        public ICollection<ApplicationUserGymClass> gymClasses { get; set; }
     }
 }
