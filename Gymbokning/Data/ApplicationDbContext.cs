@@ -27,6 +27,8 @@ namespace Gymbokning.Data
                         
             builder.Entity<ApplicationUserGymClass>().HasKey(au => new { au.ApplicationUserId, au.GymClassId });
 
+            
+
         }
 
         
