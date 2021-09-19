@@ -37,7 +37,9 @@ namespace Gymbokning.Data
                     ApplicationUser adminUser = new ApplicationUser
                     {
                         UserName= "admin@Gymbokning.se",
-                        Email= "admin@Gymbokning.se"
+                        Email= "admin@Gymbokning.se",
+                        FirstName="Admin",
+                        LastName="GymAdmin"
                     };
 
                     var result = await userManager.CreateAsync(adminUser, "sommar");
